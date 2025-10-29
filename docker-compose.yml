@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: todouser
+      POSTGRES_PASSWORD: todopass
+      POSTGRES_DB: tododb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # - ./pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf   # <-- mount custom config
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U todouser -d tododb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+
+  fastapi:
+    build:     
+      context: ./To_do_backend
+      dockerfile: Dockerfile
+
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://todouser:todopass@database:5432/tododb
+      - DEBUG=True
+    depends_on:
+      database:
+        condition: service_healthy
+    volumes:
+    - ./To_do_backend:/app  # Changed from . to ./To_do_backend
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    container_name: todo_frontend
+    build:
+      context: ./to_do_react
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - fastapi
+    environment:
+      # Tell React where the backend API is
+      REACT_APP_API_URL: http://localhost:8000
+      
+
+volumes:
+  postgres_data:
+
+
+
