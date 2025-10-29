@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    justify-content: center; /* centers the bar horizontally */
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .searchInput {
+    max-width: 400px;
+    margin: 0 auto; /* centers the search bar too if you use it */
+  }
+  
