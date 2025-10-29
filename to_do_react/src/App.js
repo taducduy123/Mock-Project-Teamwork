@@ -88,6 +88,11 @@ export function App() {
             }
             setTodos(nextTodos);
 
+            if ((filter === "completed" && !todo.is_completed) || (filter === "pending" && todo.is_completed)) {
+                console.log("call")
+                await load();
+            }
+
 
             message.success(todo.is_completed ? 'Marked as pending' : 'Marked as completed');
         } catch {
