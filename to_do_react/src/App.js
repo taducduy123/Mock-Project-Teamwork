@@ -1,5 +1,5 @@
 import {useEffect, useState, useCallback} from "react";
-import {Button, message} from 'antd';
+import {Button, message, Modal} from 'antd';
 import "antd/dist/reset.css";
 import styles from "./App.module.css";
 
@@ -10,12 +10,11 @@ import TodoTable from "./components/TodoTable/TodoTable_antd";
 import Pagination from "./components/Pagination/Pagination_antd";
 
 import {fetchTodos, createTodo, updateTodo, deleteTodo} from "./api";
+import FilterBar from "./components/FilterBar/FilterBar";
 
 
-export default function App() {
+export function App() {
     console.log("app is called")
-    console.log("a")
-
 
     const [todos, setTodos] = useState([]);
     const [filter, setFilter] = useState("all");
@@ -54,21 +53,21 @@ export default function App() {
 
     useEffect(() => {
         load().catch(console.error);
-    }, [page, filter, searchText, limit]);
+    }, [page, filter, searchText]);
+
 
     const handleCreate = async (payload) => {
         const newItem = await createTodo(payload);
         setTodos((prev) => (prev.length < limit ? [newItem, ...prev] : [newItem, ...prev.slice(0, limit - 1)]));
 
-        // setTitle("");
-        // setDescription("");
-        // setErrors({title: "", description: ""});
         setPage(1);
+        setMaxPage(Math.max(1, Math.ceil(total + 1 / limit)));
         setTotal((prev) => prev + 1);
         setFilter("all");
-        // await load({page: 1});
+
         setShowForm(false);
     };
+
 
     const handleCancel = () => {
         setTitle("");
@@ -79,8 +78,17 @@ export default function App() {
 
     const handleToggle = async (todo) => {
         try {
-            await updateTodo(todo.id, {...todo, is_completed: !todo.is_completed});
-            await load();
+            await updateTodo(todo.id, {is_completed: !todo.is_completed});
+
+            let nextTodos = todos.map(x => x);
+            for (let i = 0; i < nextTodos.length; i++) {
+                if (nextTodos[i].id === todo.id) {
+                    nextTodos[i].is_completed = !todo.is_completed;
+                }
+            }
+            setTodos(nextTodos);
+
+
             message.success(todo.is_completed ? 'Marked as pending' : 'Marked as completed');
         } catch {
             message.error('Failed to update todo');
@@ -88,19 +96,19 @@ export default function App() {
     };
 
     const handleDelete = async (id) => {
-        if (!window.confirm("Delete this todo?")) return;
         try {
             await deleteTodo(id);
             const nextTotal = Math.max(0, total - 1);
             const nextMaxPage = Math.max(1, Math.ceil(nextTotal / limit));
             const nextPage = page > nextMaxPage ? nextMaxPage : page;
 
+            setTodos((prev) => prev.filter((t) => t.id !== id));
+
             setTotal(nextTotal);
             setMaxPage(nextMaxPage);
             setPage(nextPage);
 
-            await load({page: nextPage});
-            message.success("Todo deleted!");
+
         } catch {
             message.error("Failed to delete todo");
         }
@@ -112,52 +120,76 @@ export default function App() {
     };
 
     return (
-        <div className={styles.todoContainer}>
-            <div className={styles.contentWrapper}>
-                <div className={styles.todoHeader}>📝 Todo List</div>
+        <div className="container-fluid min-vh-100 d-flex justify-content-center align-items-start py-4 bg-secondary">
+            <div className="row w-100 justify-content-center ">
+                <div className="col-12 col-sm-11 col-md-10 col-lg-10 col-xl-10 col-xxl-9 ">
+                    <div className="card shadow border-0">
+                        <div className="card-body ">
+                            <h1 className="h3 mb-4 text-center">📝 To Do List </h1>
 
-                <SearchBar onSearch={handleSearch}/>
+                            <div className="d-flex justify-content-between align-items-center mb-4">
+                                <button
+                                    className="btn btn-success"
+                                    onClick={() => {
+                                        // reset lỗi/giá trị cũ nếu muốn form sạch khi mở
+                                        setErrors({title: "", description: ""});
+                                        setTitle("");
+                                        setDescription("");
+                                        setShowForm(true);        // 👉 mở modal
+                                    }}
+                                >
+                                    + Create new task
+                                </button>
+                            </div>
 
-                <FilterBar_antd
-                    value={filter}
-                    onChange={(f) => {
-                        setFilter(f);
-                        setPage(1);
-                    }}
-                    onAdd={() => setShowForm(true)} // 👈 opens TodoForm modal
-                />
-                {showForm && (
-                    <TodoForm
-                        onCreate={handleCreate}
-                        onCancel={handleCancel}
-                        visible={showForm}
-                        title={title}
-                        setTitle={setTitle}
-                        description={description}
-                        setDescription={setDescription}
-                        errors={errors}
-                        setErrors={setErrors}
-                    />
-                )}
+                            <SearchBar onSearch={handleSearch}/>
 
-                <TodoTable
-                    todos={todos}
-                    page={page}
-                    limit={limit}
-                    onToggle={handleToggle}
-                    onDelete={handleDelete}
-                    loading={loading}
-                />
+                            <FilterBar
+                                value={filter}
+                                onChange={(f) => {
+                                    setFilter(f);
+                                    setPage(1);
+                                }}
+                            />
 
-                <Pagination
-                    page={page}
-                    maxPage={maxPage}
-                    total={total}
-                    onPrev={() => setPage((p) => Math.max(1, p - 1))}
-                    onNext={() => setPage((p) => (p < maxPage ? p + 1 : p))}
-                    onPageChange={setPage}
-                />
+                            <Modal
+
+                                open={showForm}
+                                onCancel={handleCancel}   // đã có sẵn: reset + đóng
+                                footer={null}             // dùng nút trong TodoForm, không dùng footer mặc định
+                                destroyOnClose            // đóng là hủy để form sạch
+                            >
+                                <TodoForm
+                                    onCreate={handleCreate}
+                                    onCancel={handleCancel}
+                                    title={title}
+                                    setTitle={setTitle}
+                                    description={description}
+                                    setDescription={setDescription}
+                                    errors={errors}
+                                    setErrors={setErrors}
+                                />
+                            </Modal>
+
+                            {/* Nếu bảng rộng, cho phép cuộn ngang để không bị “cắt” khi zoom */}
+                            <div className="table-responsive">
+                                <TodoTable
+                                    todos={todos}
+                                    page={page}
+                                    total={total}
+                                    limit={limit}
+                                    loading={loading}
+                                    onToggle={handleToggle}
+                                    onDelete={handleDelete}
+                                    onPageChange={setPage}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
+
     );
 }

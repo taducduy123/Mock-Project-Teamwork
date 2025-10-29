@@ -1,3 +1,19 @@
+/* TodoTable_antd.module.css */
+.customTable :global(.ant-table) {
+    background-color: #e2e8f0;            /* đậm hơn */
+}
+.customTable :global(.ant-table-thead > tr > th) {
+    background-color: #cbd5e1;            /* header đậm hơn nữa */
+    color: #0f172a;
+}
+.customTable :global(.ant-table-tbody > tr > td) {
+    background-color: #e2e8f0 !important; /* ô đậm hơn */
+}
+.customTable :global(.ant-table-tbody > tr:hover > td) {
+    background-color: #cbd5e1 !important; /* hover đậm */
+}
+
+
 .tableContainer {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 12px;

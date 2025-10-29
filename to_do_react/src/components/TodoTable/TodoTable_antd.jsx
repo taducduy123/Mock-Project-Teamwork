@@ -26,7 +26,7 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
             title: 'Description',
             dataIndex: 'description',
             key: 'description',
-            sorter: (a, b) => a.description.localeCompare(b.description),
+            sorter: (a, b) => a.description.length - b.description.length,
             render: (text, record) => (
                 <span className={record.is_completed ? styles.completed : styles.normal}>
           {text}
@@ -81,6 +81,7 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
     return (
         <div className={styles.tableContainer}>
             <Table
+                className={styles.customTable}
                 columns={columns}
                 dataSource={todos}
                 loading={loading}

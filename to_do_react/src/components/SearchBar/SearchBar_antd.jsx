@@ -6,14 +6,15 @@ const { Search } = Input;
 
 export default function SearchBar({ onSearch }) {
   return (
-    <div className={styles.container}>
+    <div className="d-flex justify-content-center align-items-center mb-3">
       <Search
         placeholder="Search by title..."
         allowClear
         enterButton={<SearchOutlined />}
         size="large"
         onSearch={onSearch}
-        className={styles.searchInput}
+        className="w-100 mx-auto"
+
       />
     </div>
   );
