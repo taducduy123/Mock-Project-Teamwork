@@ -1,4 +1,4 @@
-import {useEffect, useState, useCallback} from "react";
+import {useEffect, useState} from "react";
 import {Button, message, Modal} from 'antd';
 import "antd/dist/reset.css";
 import styles from "./App.module.css";
@@ -32,7 +32,10 @@ export function App() {
     const [errors, setErrors] = useState({title: "", description: ""});
 
     // Load todos
-    const load = async (opts = {}) => {
+    const load = async (opts = {
+
+    }) => {
+        console.log("load is called")
         setLoading(true);
         try {
             const curPage = opts.page ?? page;
@@ -53,6 +56,7 @@ export function App() {
 
     useEffect(() => {
         load().catch(console.error);
+        console.log("useEffect is called")
     }, [page, filter, searchText]);
 
 
@@ -119,9 +123,13 @@ export function App() {
         }
     };
 
-    const handleSearch = (value) => {
+    const handleSearch = async (value) => {
         setSearchText(value);
         setPage(1);
+
+
+
+
     };
 
     return (
