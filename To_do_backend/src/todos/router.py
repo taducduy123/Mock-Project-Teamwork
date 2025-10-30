@@ -84,11 +84,12 @@ def delete_todo(
 def get_completed_todos(
     skip: int = Query(0, ge=0),
     limit: int = Query(10, ge=1, le=100),
-    db: Session = Depends(get_db)
+    search: Optional[str] = Query(None, description="Search keyword"),  # ✅ Added here
+    db: Session = Depends(get_db),
 ):
-    """Get completed todos"""
+    """Get completed todos (with optional search)"""
     service = TodoService(db)
-    result = service.get_completed_todos_paginated(skip, limit)
+    result = service.get_completed_todos_paginated(skip=skip, limit=limit, search=search)
     items = [TodoResponse.from_orm(todo) for todo in result["items"]]
     return TodoListResponse(total=result["total"], items=items)
 
@@ -97,12 +98,11 @@ def get_completed_todos(
 def get_pending_todos(
     skip: int = Query(0, ge=0),
     limit: int = Query(10, ge=1, le=100),
-    db: Session = Depends(get_db)
+    search: Optional[str] = Query(None, description="Search keyword"),  # ✅ Added here too
+    db: Session = Depends(get_db),
 ):
-    """Get pending todos"""
+    """Get pending todos (with optional search)"""
     service = TodoService(db)
-    result = service.get_pending_todos_paginated(skip, limit)
+    result = service.get_pending_todos_paginated(skip=skip, limit=limit, search=search)
     items = [TodoResponse.from_orm(todo) for todo in result["items"]]
     return TodoListResponse(total=result["total"], items=items)
-
-

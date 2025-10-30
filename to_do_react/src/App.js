@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useState, useCallback} from "react";
 import {Button, message, Modal} from 'antd';
 import "antd/dist/reset.css";
 import styles from "./App.module.css";
@@ -32,10 +32,7 @@ export function App() {
     const [errors, setErrors] = useState({title: "", description: ""});
 
     // Load todos
-    const load = async (opts = {
-
-    }) => {
-        console.log("load is called")
+    const load = async (opts = {}) => {
         setLoading(true);
         try {
             const curPage = opts.page ?? page;
@@ -56,7 +53,6 @@ export function App() {
 
     useEffect(() => {
         load().catch(console.error);
-        console.log("useEffect is called")
     }, [page, filter, searchText]);
 
 
@@ -123,13 +119,15 @@ export function App() {
         }
     };
 
-    const handleSearch = async (value) => {
+    const handleFilterChange = (newFilter) => {
+        setFilter(newFilter);
+        setPage(1);
+        // DO NOT call setSearchText("") — keep search so it searches inside the new filter
+        // load() will run via useEffect because filter changed
+      };
+    const handleSearch = (value) => {
         setSearchText(value);
         setPage(1);
-
-
-
-
     };
 
     return (
