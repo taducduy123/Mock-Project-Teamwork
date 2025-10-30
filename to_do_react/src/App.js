@@ -119,6 +119,12 @@ export function App() {
         }
     };
 
+    const handleFilterChange = (newFilter) => {
+        setFilter(newFilter);
+        setPage(1);
+        // DO NOT call setSearchText("") — keep search so it searches inside the new filter
+        // load() will run via useEffect because filter changed
+      };
     const handleSearch = (value) => {
         setSearchText(value);
         setPage(1);
