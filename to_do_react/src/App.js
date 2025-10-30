@@ -119,12 +119,13 @@ export function App() {
         }
     };
 
-    const handleFilterChange = (newFilter) => {
-        setFilter(newFilter);
-        setPage(1);
-        // DO NOT call setSearchText("") — keep search so it searches inside the new filter
-        // load() will run via useEffect because filter changed
-      };
+    // const handleFilterChange = (newFilter) => {
+    //     setFilter(newFilter);
+    //     setPage(1);
+    //     // DO NOT call setSearchText("") — keep search so it searches inside the new filter
+    //     // load() will run via useEffect because filter changed
+    //   };
+
     const handleSearch = (value) => {
         setSearchText(value);
         setPage(1);
@@ -153,15 +154,21 @@ export function App() {
                                 </button>
                             </div>
 
-                            <SearchBar onSearch={handleSearch}/>
-
-                            <FilterBar
-                                value={filter}
-                                onChange={(f) => {
-                                    setFilter(f);
-                                    setPage(1);
-                                }}
+                            <SearchBar
+                                className="mb-4"
+                                onSearch={handleSearch}
                             />
+
+                            <div className="mt-4">
+                                <FilterBar
+                                    value={filter}
+                                    onChange={(f) => {
+                                        setFilter(f);
+                                        setPage(1);
+                                    }}
+                                />
+                            </div>
+
 
                             <Modal
 

@@ -86,7 +86,7 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
                 dataSource={todos}
                 loading={loading}
                 rowKey="id"
-                locale={{emptyText: 'No todos found'}}
+                locale={{emptyText: 'No results found'}}
                 pagination={
                     {
                         current: page,
