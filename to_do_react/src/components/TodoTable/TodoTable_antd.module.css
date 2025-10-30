@@ -1,36 +1,42 @@
 /* TodoTable_antd.module.css */
 .customTable :global(.ant-table) {
-    background-color: #e2e8f0;            /* đậm hơn */
+    background-color: #e2e8f0; /* đậm hơn */
 }
+
 .customTable :global(.ant-table-thead > tr > th) {
-    background-color: #cbd5e1;            /* header đậm hơn nữa */
+    background-color: #cbd5e1; /* header đậm hơn nữa */
     color: #0f172a;
 }
+
 .customTable :global(.ant-table-tbody > tr > td) {
     background-color: #e2e8f0 !important; /* ô đậm hơn */
 }
+
 .customTable :global(.ant-table-tbody > tr:hover > td) {
     background-color: #cbd5e1 !important; /* hover đậm */
 }
 
 
 .tableContainer {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    max-width: 100%;
+    overflow-x: auto;
 }
 
 .completed {
-  text-decoration: line-through;
-  color: #999;
+    text-decoration: line-through;
+    color: #999;
 }
 
 .normal {
-  color: #333;
+    color: #333;
 }
 
 .actions {
-  display: flex;
-  gap: 8px;
+    display: flex;
+    gap: 8px;
 }

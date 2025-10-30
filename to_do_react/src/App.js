@@ -1,17 +1,12 @@
-import {useEffect, useState, useCallback} from "react";
-import {Button, message, Modal} from 'antd';
+import {useEffect, useState} from "react";
+import {message, Modal} from 'antd';
 import "antd/dist/reset.css";
-import styles from "./App.module.css";
-
 import SearchBar from "./components/SearchBar/SearchBar_antd";
-import FilterBar_antd from "./components/FilterBar/FilterBar_antd";
 import TodoForm from "./components/TodoForm/TodoForm_antd";
 import TodoTable from "./components/TodoTable/TodoTable_antd";
-import Pagination from "./components/Pagination/Pagination_antd";
-
 import {fetchTodos, createTodo, updateTodo, deleteTodo} from "./api";
 import FilterBar from "./components/FilterBar/FilterBar";
-
+import "./App.css";
 
 export function App() {
     console.log("app is called")
@@ -132,12 +127,12 @@ export function App() {
     };
 
     return (
-        <div className="container-fluid min-vh-100 d-flex justify-content-center align-items-start py-4 bg-secondary">
-            <div className="row w-100 justify-content-center ">
-                <div className="col-12 col-sm-11 col-md-10 col-lg-10 col-xl-10 col-xxl-9 ">
-                    <div className="card shadow border-0">
+        <div className="container-fluid min-vh-100 d-flex justify-content-center align-items-start py-4 my-container">
+            <div className="row w-100 justify-content-center">
+                <div className="col-12 col-sm-11 col-md-10 col-lg-10 col-xl-10 col-xxl-9">
+                    <div className="card shadow border-0 my-card-height">
                         <div className="card-body ">
-                            <h1 className="h3 mb-4 text-center">📝 To Do List </h1>
+                            <h1 className="h3 mb-4 text-center my-title">📝 To Do List </h1>
 
                             <div className="d-flex justify-content-between align-items-center mb-4">
                                 <button

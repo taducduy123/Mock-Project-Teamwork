@@ -21,3 +21,24 @@
 /*    padding: 8px 16px;*/
 /*    border-radius: 10px;*/
 /*}*/
+
+
+.my-container {
+    background: linear-gradient(135deg, #5f00b3, #007bff);
+}
+
+.my-title {
+    text-align: center;
+    color: #007bff;
+    font-size: 36px;
+    margin-bottom: 5px;
+    background: #ffffff;
+    padding: 8px 16px;
+    border-radius: 10px;
+}
+
+
+.my-card-height{
+    height: 95vh;
+    scroll-behavior: smooth;
+}

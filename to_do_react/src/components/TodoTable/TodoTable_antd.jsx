@@ -5,15 +5,18 @@ import styles from './TodoTable_antd.module.css';
 export default function TodoTable({todos, page, limit, total, onToggle, onDelete, onPageChange, loading}) {
     const columns = [
         {
-            title: '#',
+            title: <strong>#</strong> ,
             key: 'index',
-            width: 60,
+            width: '5%',
+            align: 'center',
             render: (_, __, index) => (page - 1) * limit + index + 1,
         },
         {
-            title: 'Title',
+            title: <strong>Title</strong>,
             dataIndex: 'title',
             key: 'title',
+            width: '30%',
+
             sorter: (a, b) => a.title.localeCompare(b.title), // ✅ A–Z sorting
             sortDirections: ['ascend', 'descend'],
             render: (text, record) => (
@@ -23,9 +26,10 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
             ),
         },
         {
-            title: 'Description',
+            title: <strong>Description</strong>,
             dataIndex: 'description',
             key: 'description',
+            width: '30%',
             sorter: (a, b) => a.description.length - b.description.length,
             render: (text, record) => (
                 <span className={record.is_completed ? styles.completed : styles.normal}>
@@ -34,9 +38,10 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
             ),
         },
         {
-            title: 'Status',
+            title: <strong>Status</strong>,
             key: 'status',
-            width: 120,
+            align: 'center',
+            width: '5%',
             render: (_, record) => (
                 <Tag color={record.is_completed ? 'success' : 'warning'}>
                     {record.is_completed ? 'Completed' : 'Pending'}
@@ -44,9 +49,10 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
             ),
         },
         {
-            title: 'Actions',
+            title: <strong>Actions</strong>,
             key: 'actions',
-            width: 180,
+            align: 'center',
+            width: '10%',
             render: (_, record) => (
                 <div className={styles.actions}>
                     <Button
@@ -87,6 +93,8 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
                 loading={loading}
                 rowKey="id"
                 locale={{emptyText: 'No results found'}}
+                scroll={{ y: '50vh' }}   // 👈 quan trọng
+                tableLayout="fixed"
                 pagination={
                     {
                         current: page,
@@ -99,6 +107,7 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
 
                 }
             />
+
         </div>
     );
 }
