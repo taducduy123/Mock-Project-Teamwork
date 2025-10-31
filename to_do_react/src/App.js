@@ -127,72 +127,75 @@ export function App() {
     };
 
     return (
-        <div className="app-wrapper d-flex align-items-center justify-content-center min-vh-100">
-          <div className="card shadow-lg border-0 my-card">
-            <div className="card-body p-5">
-              <h1 className="h3 text-center mb-4">📝 To Do List</h1>
-      
-              <div className="d-flex justify-content-between align-items-center mb-4">
-                <button
-                  className="btn btn-success"
-                  onClick={() => {
-                    setErrors({ title: "", description: "" });
-                    setTitle("");
-                    setDescription("");
-                    setShowForm(true);
-                  }}
-                >
-                  + Create new task
-                </button>
-              </div>
-      
-              <div className="mb-4">
-                <SearchBar onSearch={handleSearch} />
-              </div>
-      
-              <div className="mb-4 text-center">
-                <FilterBar
-                  value={filter}
-                  onChange={(f) => {
-                    setFilter(f);
-                    setPage(1);
-                  }}
-                />
-              </div>
-      
-              <div className="table-responsive">
-                <TodoTable
-                  todos={todos}
-                  page={page}
-                  total={total}
-                  limit={limit}
-                  loading={loading}
-                  onToggle={handleToggle}
-                  onDelete={handleDelete}
-                  onPageChange={setPage}
-                />
-              </div>
-      
-              <Modal
-                open={showForm}
-                onCancel={handleCancel}
-                footer={null}
-                destroyOnClose
-              >
-                <TodoForm
-                  onCreate={handleCreate}
-                  onCancel={handleCancel}
-                  title={title}
-                  setTitle={setTitle}
-                  description={description}
-                  setDescription={setDescription}
-                  errors={errors}
-                  setErrors={setErrors}
-                />
-              </Modal>
+        <div className="app-wrapper d-flex align-items-center justify-content-center min-vh-100 my-parent-container">
+            <div className="card shadow-lg border-0 my-card my-container">
+                <div className="card-body p-5">
+                    <div className="text-center">
+                        <span className="h3 mb-4 bg-danger d-inline-block my-title">📝 To Do List</span>
+                    </div>
+
+
+                    <div className="d-flex justify-content-between align-items-center mb-4">
+                        <button
+                            className="btn btn-success"
+                            onClick={() => {
+                                setErrors({title: "", description: ""});
+                                setTitle("");
+                                setDescription("");
+                                setShowForm(true);
+                            }}
+                        >
+                            + Create new task
+                        </button>
+                    </div>
+
+                    <div className="mb-4">
+                        <SearchBar onSearch={handleSearch}/>
+                    </div>
+
+                    <div className="mb-4 text-center">
+                        <FilterBar
+                            value={filter}
+                            onChange={(f) => {
+                                setFilter(f);
+                                setPage(1);
+                            }}
+                        />
+                    </div>
+
+                    <div className="table-responsive">
+                        <TodoTable
+                            todos={todos}
+                            page={page}
+                            total={total}
+                            limit={limit}
+                            loading={loading}
+                            onToggle={handleToggle}
+                            onDelete={handleDelete}
+                            onPageChange={setPage}
+                        />
+                    </div>
+
+                    <Modal
+                        open={showForm}
+                        onCancel={handleCancel}
+                        footer={null}
+                        destroyOnClose
+                    >
+                        <TodoForm
+                            onCreate={handleCreate}
+                            onCancel={handleCancel}
+                            title={title}
+                            setTitle={setTitle}
+                            description={description}
+                            setDescription={setDescription}
+                            errors={errors}
+                            setErrors={setErrors}
+                        />
+                    </Modal>
+                </div>
             </div>
-          </div>
         </div>
-      );
-      
-                        }      
+    );
+
+}

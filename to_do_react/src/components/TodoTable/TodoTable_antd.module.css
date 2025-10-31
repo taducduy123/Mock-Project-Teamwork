@@ -22,9 +22,10 @@
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-height: 40%;
+    height: 40%;
     max-width: 100%;
     overflow-x: auto;
+    overflow-y: auto;
 }
 
 .completed {
@@ -37,6 +38,10 @@ height: 40%;
 }
 
 .actions {
-    display: flex;
-    gap: 8px;
+    display: flex; /* dùng flex để can giữa */
+    justify-content: center; /* giữa theo trục ngang */
+    align-items: center; /* giữa theo trục dọc */
+    gap: 8px; /* khoảng cách giữa 2 nút */
+    height: 100%; /* chiếm toàn bộ chiều cao ô để can dọc chuẩn */
+    flex-wrap: wrap;
 }

@@ -18,7 +18,7 @@ export default function SearchBar({ onSearch }) {
 
             const cleaned = query.trim();
             onSearch(cleaned);
-        }, 200); // search sau 200ms
+        }, 100); // search sau 200ms
 
         return () => clearTimeout(handler);
     }, [query, isActive, onSearch]);

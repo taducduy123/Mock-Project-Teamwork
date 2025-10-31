@@ -41,9 +41,11 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
             title: <strong>Status</strong>,
             key: 'status',
             align: 'center',
+
             width: '10%',
             render: (_, record) => (
-                <Tag color={record.is_completed ? 'success' : 'warning'}>
+                <Tag
+                    color={record.is_completed ? 'success' : 'warning'}>
                     {record.is_completed ? 'Completed' : 'Pending'}
                 </Tag>
             ),
@@ -93,7 +95,7 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
                 loading={loading}
                 rowKey="id"
                 locale={{emptyText: 'No results found'}}
-                scroll={{ y: 400 }}   // 👈 quan trọng
+                scroll={{ y: '40vh', x: 'max-content' }}   // 👈 quan trọng
                 tableLayout="fixed"
                 pagination={
                     {
