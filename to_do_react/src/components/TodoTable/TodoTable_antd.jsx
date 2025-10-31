@@ -41,7 +41,7 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
             title: <strong>Status</strong>,
             key: 'status',
             align: 'center',
-            width: '5%',
+            width: '10%',
             render: (_, record) => (
                 <Tag color={record.is_completed ? 'success' : 'warning'}>
                     {record.is_completed ? 'Completed' : 'Pending'}
@@ -52,7 +52,7 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
             title: <strong>Actions</strong>,
             key: 'actions',
             align: 'center',
-            width: '10%',
+            width: '25%',
             render: (_, record) => (
                 <div className={styles.actions}>
                     <Button
@@ -93,7 +93,7 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
                 loading={loading}
                 rowKey="id"
                 locale={{emptyText: 'No results found'}}
-                scroll={{ y: '50vh' }}   // 👈 quan trọng
+                scroll={{ y: 400 }}   // 👈 quan trọng
                 tableLayout="fixed"
                 pagination={
                     {
