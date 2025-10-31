@@ -85,7 +85,7 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
     ];
 
     return (
-        <div className={styles.tableContainer}>
+
             <Table
                 className={styles.customTable}
                 columns={columns}
@@ -93,21 +93,24 @@ export default function TodoTable({todos, page, limit, total, onToggle, onDelete
                 loading={loading}
                 rowKey="id"
                 locale={{emptyText: 'No results found'}}
-                scroll={{ y: '50vh' }}   // 👈 quan trọng
+                scroll={{ y: '100%' }}   // 👈 quan trọng
                 tableLayout="fixed"
+                sticky={{ offsetHeader: 0 }}
                 pagination={
                     {
                         current: page,
                         pageSize: limit,
                         total: total,
                         showSizeChanger: false,    // khóa đổi pageSize
+
                         showTotal: (t, range) => `${range[0]}–${range[1]} / ${t} record(s)`,
                         onChange: (p) => onPageChange?.(p),
+
                     }
 
                 }
             />
 
-        </div>
+
     );
 }

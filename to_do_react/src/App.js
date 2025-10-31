@@ -131,7 +131,7 @@ export function App() {
             <div className="row w-100 justify-content-center">
                 <div className="col-12 col-sm-11 col-md-10 col-lg-10 col-xl-10 col-xxl-9">
                     <div className="card shadow border-0 my-card-height">
-                        <div className="card-body ">
+
                             <h1 className="h3 mb-4 text-center my-title">📝 To Do List </h1>
 
                             <div className="d-flex justify-content-between align-items-center mb-4">
@@ -197,7 +197,7 @@ export function App() {
                                     onPageChange={setPage}
                                 />
                             </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
