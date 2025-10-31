@@ -127,82 +127,72 @@ export function App() {
     };
 
     return (
-        <div className="container-fluid min-vh-100 d-flex justify-content-center align-items-start py-4 my-container">
-            <div className="row w-100 justify-content-center">
-                <div className="col-12 col-sm-11 col-md-10 col-lg-10 col-xl-10 col-xxl-9">
-                    <div className="card shadow border-0 my-card-height">
-                        <div className="card-body ">
-                            <h1 className="h3 mb-4 text-center my-title">📝 To Do List </h1>
-
-                            <div className="d-flex justify-content-between align-items-center mb-4">
-                                <button
-                                    className="btn btn-success"
-                                    onClick={() => {
-                                        // reset lỗi/giá trị cũ nếu muốn form sạch khi mở
-                                        setErrors({title: "", description: ""});
-                                        setTitle("");
-                                        setDescription("");
-                                        setShowForm(true);        // 👉 mở modal
-                                    }}
-                                >
-                                    + Create new task
-                                </button>
-                            </div>
-
-                            <SearchBar
-                                className="mb-4"
-                                onSearch={handleSearch}
-                            />
-
-                            <div className="mt-4">
-                                <FilterBar
-                                    value={filter}
-                                    onChange={(f) => {
-                                        setFilter(f);
-                                        setPage(1);
-                                    }}
-                                />
-                            </div>
-
-
-                            <Modal
-
-                                open={showForm}
-                                onCancel={handleCancel}   // đã có sẵn: reset + đóng
-                                footer={null}             // dùng nút trong TodoForm, không dùng footer mặc định
-                                destroyOnClose            // đóng là hủy để form sạch
-                            >
-                                <TodoForm
-                                    onCreate={handleCreate}
-                                    onCancel={handleCancel}
-                                    title={title}
-                                    setTitle={setTitle}
-                                    description={description}
-                                    setDescription={setDescription}
-                                    errors={errors}
-                                    setErrors={setErrors}
-                                />
-                            </Modal>
-
-                            {/* Nếu bảng rộng, cho phép cuộn ngang để không bị “cắt” khi zoom */}
-                            <div className="table-responsive">
-                                <TodoTable
-                                    todos={todos}
-                                    page={page}
-                                    total={total}
-                                    limit={limit}
-                                    loading={loading}
-                                    onToggle={handleToggle}
-                                    onDelete={handleDelete}
-                                    onPageChange={setPage}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div className="app-wrapper d-flex align-items-center justify-content-center min-vh-100">
+          <div className="card shadow-lg border-0 my-card">
+            <div className="card-body p-5">
+              <h1 className="h3 text-center mb-4">📝 To Do List</h1>
+      
+              <div className="d-flex justify-content-between align-items-center mb-4">
+                <button
+                  className="btn btn-success"
+                  onClick={() => {
+                    setErrors({ title: "", description: "" });
+                    setTitle("");
+                    setDescription("");
+                    setShowForm(true);
+                  }}
+                >
+                  + Create new task
+                </button>
+              </div>
+      
+              <div className="mb-4">
+                <SearchBar onSearch={handleSearch} />
+              </div>
+      
+              <div className="mb-4 text-center">
+                <FilterBar
+                  value={filter}
+                  onChange={(f) => {
+                    setFilter(f);
+                    setPage(1);
+                  }}
+                />
+              </div>
+      
+              <div className="table-responsive">
+                <TodoTable
+                  todos={todos}
+                  page={page}
+                  total={total}
+                  limit={limit}
+                  loading={loading}
+                  onToggle={handleToggle}
+                  onDelete={handleDelete}
+                  onPageChange={setPage}
+                />
+              </div>
+      
+              <Modal
+                open={showForm}
+                onCancel={handleCancel}
+                footer={null}
+                destroyOnClose
+              >
+                <TodoForm
+                  onCreate={handleCreate}
+                  onCancel={handleCancel}
+                  title={title}
+                  setTitle={setTitle}
+                  description={description}
+                  setDescription={setDescription}
+                  errors={errors}
+                  setErrors={setErrors}
+                />
+              </Modal>
             </div>
+          </div>
         </div>
-
-
-    );
-}
+      );
+      
+                        }      
